@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     btnLogin.setOnClickListener {
         var userName=etUserName.text.toString()
-       // var password=etPassword.text.toString()
+        //var password=etPassword.text.toString()
         Toast.makeText(baseContext,userName,Toast.LENGTH_LONG).show()
     }
     }
