@@ -19,16 +19,16 @@ class CoursesActivity : AppCompatActivity() {
                 rvCourses.layoutManager = LinearLayoutManager(baseContext)
                 CoursesActivityRecyclerViewAdapter(
                     coursesActivity = listOf(
-                        Coursesactivity(0, "mercy", 11, "Brenda", "Kotlin project1"),
-                        Coursesactivity(1, "mercy", 12, "Anne", "Java project2"),
-                        Coursesactivity(2, "mercy", 13, "Angel", "Html project3"),
-                        Coursesactivity(4, "mercy", 14, "Bella", "Css project4"),
-                        Coursesactivity(5, "mercy", 15, "Lisa", "Design project5"),
-                        Coursesactivity(6, "mercy", 16, "Felisters", "Electonics project6"),
-                        Coursesactivity(7, "mercy", 17, "Gabriella", "Python project6"),
-                        Coursesactivity(8, "mercy", 18, "Nancy", "Machine project7"),
-                        Coursesactivity(9, "mercy", 19, "Shantel", "Kotli2 project9"),
-                        Coursesactivity(10, "mercy", 20, "Valencia", "Python2 project9")
+                        Coursesactivity(0, "Kotlin", 11, "Brenda", "Kotlin project1"),
+                        Coursesactivity(1, "Java", 12, "Anne", "Java project2"),
+                        Coursesactivity(2, "Html", 13, "Angel", "Html project3"),
+                        Coursesactivity(4, "Css", 14, "Bella", "Css project4"),
+                        Coursesactivity(5, "Python", 15, "Lisa", "Design project5"),
+                        Coursesactivity(6, "Django", 16,"Felisters", "Electonics project6"),
+                        Coursesactivity(7, "Kotlin", 17, "Gabriella", "Python project6"),
+                        Coursesactivity(8, "Javascript", 18, "Nancy", "Machine project7"),
+                        Coursesactivity(9, "Java", 19, "Shantel", "Kotli2 project9"),
+                        Coursesactivity(10, "Css", 20, "Valencia", "Python2 project9")
 
                     )
                 );
