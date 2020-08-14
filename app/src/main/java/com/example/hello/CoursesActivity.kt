@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_courses.*
-import layout.CoursesRecyclerViewAdapter
+
 
 
 class CoursesActivity : AppCompatActivity() {

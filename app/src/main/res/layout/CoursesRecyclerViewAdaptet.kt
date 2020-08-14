@@ -1,4 +1,4 @@
-package layout
+package com.example.hello
 
 import android.view.LayoutInflater
 import android.view.View
