@@ -7,18 +7,11 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvCourses"
-        android:layout_width="38dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="351dp"
-        android:layout_marginRight="351dp"
-        android:layout_marginBottom="680dp"
-        android:text="Courses"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/idCourseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Course Name"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="43dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

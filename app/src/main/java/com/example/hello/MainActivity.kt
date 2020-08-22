@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     }
     }
 
-
     fun registerUser(requestBody: RequestBody) {
         var apiClient = APiClient.buildService(ApiInterface::class.java)
         var registrationCall = apiClient.registerStudent(requestBody)
