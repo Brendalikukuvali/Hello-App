@@ -5,6 +5,8 @@ import android.preference.PreferenceManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Room
+import database.HelloDatabase
 import kotlinx.android.synthetic.main.activity_courses.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -12,10 +14,11 @@ import retrofit2.Response
 
 
 class CoursesActivity : AppCompatActivity() {
+    lateinit var database: HelloDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_courses)
-        setContentView(R.layout.activity_courses)
+       database = Room.databaseBuilder(baseContext, HelloDatabase::class.java)
         var courseList = listOf<courses>(
 
                     Courses(0, "Kotlin", 11, "Brenda", "Kotlin project1"),
@@ -51,9 +54,15 @@ class CoursesActivity : AppCompatActivity() {
                 override fun onResponse(
                     call: Call<CoursesResponse>,
                     response: Response<CoursesResponse>
-                ) = if (response.isSuccessful) {
+                ) {
+                    if (response.isSuccessful) {
                     var courseList = response.body()?.courses as List<courses>
-                    var coursesAdapter = (courseList)
+                    Thread {
+                        courseList.forEach{  courses ->
+
+                        }
+                    }
+                        var coursesAdapter = (courseList)
                     rvCourses.layoutManager = LinearLayoutManager(baseContext)
                     rvCourses.adapter = CoursesAdapter
                 } else {
