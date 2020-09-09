@@ -1,64 +1,87 @@
 package com.example.hello
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_registration2.*
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import kotlinx.android.synthetic.main.activity_main.etPassword as etPassword1
+import okhttp3.*
+
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-    btnLogin.setOnClickListener {
-        var userName=etUserName.text.toString()
-        var password=etPassword.text.toString()
-        Toast.makeText(baseContext,userName,Toast.LENGTH_LONG).show()
 
-        var requestBody = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("user_name", userName)
-            .addFormDataPart("password", password)
-            .build()
+        tvRegister.setOnClickListener {
+            val intent = Intent(baseContext, RegistrationActivity::class.java)
+            startActivity(intent)
+        }
 
-        registerUser(requestBody)
-        Toast.makeText(baseContext, userName, Toast.LENGTH_SHORT).show()
-    }
-    }
+        btnLogin.setOnClickListener {
+            var email = etUserName.text.toString()
+            var password = etPassword.text.toString()
 
-    fun registerUser(requestBody: RequestBody) {
-        var apiClient = APiClient.buildService(ApiInterface::class.java)
-        var registrationCall = apiClient.registerStudent(requestBody)
-        registrationCall.enqueue(object : Callback<RegistrationResponse> {
-            override fun onFailure(call: Call<RegistrationResponse>, t: Throwable) {
-                Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
+            var error = false
+
+            if (email.isBlank() || email.isEmpty()) {
+                error = true
+                etUserName.error = "Email is required"
             }
 
-            override fun onResponse(
-                call: Call<RegistrationResponse>,
+            if (password.isBlank() || password.isEmpty()) {
+                error = true
+                etPassword.error = "Password is required"
+            }
 
-                response: Response<RegistrationResponse>
-            ) {
+            val requestBody = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("email", email)
+                .addFormDataPart("password", password)
+                .build()
+
+            if (!error) {
+                pbLogin.visibility = View.VISIBLE
+                loginUser(requestBody)
+            }
+        }
+    }
+
+    fun loginUser(requestBody: RequestBody) {
+        val apiClient = ApiClient.buildService(ApiInterface::class.java)
+        val loginCall = apiClient.loginStudent(requestBody)
+
+        loginCall.enqueue(object : Callback<LoginResponse> {
+            fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
+                val pbLogin = null
+                pbLogin.visibility = View.GONE
+            }
+
+            fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) =
                 if (response.isSuccessful) {
+                    val pbLogin = null
+                    pbLogin.java = View.GONE
                     Toast.makeText(baseContext, response.body()?.message, Toast.LENGTH_LONG).show()
-                    startActivity(Intent(baseContext, MainActivity::class.java))
+
+                    var accessToken = response.body()?.accessToken
+                    val studentId = response.body()?.studentId
+                    var sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(baseContext)
+                    var editor = sharedPreferences.edit()
+                    editor.putString("ACCESS_TOKEN_KEY", accessToken)
+                    editor.putString("STUDENT_ID_KEY", studentId)
+                    editor.apply()
+                    val intent = Intent(baseContext, CoursesActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 } else {
                     Toast.makeText(baseContext, response.errorBody().toString(), Toast.LENGTH_LONG)
                         .show()
                 }
-            }
         })
     }
-
 }
-
-
