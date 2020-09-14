@@ -1,10 +1,10 @@
-package com.example.hello
+package Activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.hello.APiClient.buildService
+import com.example.hello.*
 import kotlinx.android.synthetic.main.activity_registration2.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -41,7 +41,8 @@ class RegistrationActivity : AppCompatActivity() {
 
 
     fun registerUser(requestBody: RequestBody) {
-        var apiClient = APiClient.buildService(ApiInterface::class.java)
+        var apiClient = APiClient.buildService(
+            ApiInterface::class.java)
         var registrationCall = apiClient.registerStudent(requestBody)
         registrationCall.enqueue(object : Callback<RegistrationResponse> {
             override fun onFailure(call: Call<RegistrationResponse>, t: Throwable) {

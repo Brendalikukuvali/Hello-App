@@ -1,4 +1,4 @@
-package com.example.hello
+package Activities
 
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import com.example.hello.*
 import database.HelloDatabase
 import kotlinx.android.synthetic.main.activity_courses.*
 import retrofit2.Call
@@ -44,7 +45,8 @@ class CoursesActivity : AppCompatActivity() {
             val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(baseContext)
             val accessToken = sharedPreferences.getString("ACCESS_TOKEN_KEY", "")
 
-            val apiClient = APiClient.buildService(ApiInterface::class.java)
+            val apiClient =
+                APiClient.buildService(ApiInterface::class.java)
             val coursesCall = apiClient.getCourses("Bearer " + accessToken)
             coursesCall.enqueue(object : Callback<CourseResponse> {
                 override fun onFailure(call: Call<CourseResponse>, t: Throwable) {
